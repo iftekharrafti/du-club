@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request) {
-
-  const authToken = request.cookies.get("TOKEN_LOGIN")?.value;
+  const authToken = request.cookies.get("loginCookie")?.value;
 
   const loggedInUserNotAccessPaths =
     request.nextUrl.pathname === "/" ||

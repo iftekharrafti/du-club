@@ -21,8 +21,6 @@ export default function Dashboard({ data }) {
   const [info, setInfo] = useState([]);
   const [counter, setCounter] = useState(0);
 
-  // const data = await getData();
-  // console.log(data);
   useEffect(() => {
     if (data) {
       console.log(data);

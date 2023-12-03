@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 export default function Login() {
   const [loadingBtn, setLoadingBtn] = useState(false);
   const [scheneChange, setScheneChange] = useState(true);
+  const [phone, setPhone] = useState("");
   const router = useRouter();
 
   const {
@@ -24,6 +25,7 @@ export default function Login() {
 
   const handleLoginSubmit = async (data) => {
     try {
+      setPhone(data.phone);
       setLoadingBtn(true);
       const response = await fetch(`${BASE_URL}/users/${data.phone}`);
       const result = await response.json();
@@ -33,6 +35,36 @@ export default function Login() {
         setLoadingBtn(false);
         setScheneChange(!scheneChange);
         reset();
+      }else if(result.status === "error"){
+        toast.error(result.message)
+        setLoadingBtn(false);
+      }
+      else{
+        toast.error(result.message)
+        setLoadingBtn(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  // http://localhost:3000/api/users/01750360044/9615
+  const handleCodeSubmit = async (data) => {
+    try {
+      setLoadingBtn(true);
+      const response = await fetch(`${BASE_URL}/users/${phone}/${data.code}`);
+      const result = await response.json();
+      if(result.status === "success"){
+        setLoadingBtn(false);
+        toast.success(result.message)
+        router.push("/dashboard");
+        reset();
+      } else if(result.status === "error"){
+        setLoadingBtn(false);
+        toast.error(result.message)
+      }
+      else{
+        setLoadingBtn(false);
+        toast.error(result.message)
       }
     } catch (err) {
       console.log(err);
@@ -102,7 +134,7 @@ export default function Login() {
                     {/* Form header and login Form data */}
                     {/* Title */}
                     {/* <TopTitle title="We've sent a 4-digit one time PIN in your phone" /> */}
-                    <Form>
+                    <Form onClick={handleSubmit(handleCodeSubmit)}>
                       <Form.Group className="mb-3" controlId="formEmail">
                         <Form.Label>4-digit PIN</Form.Label>
                         <Form.Control

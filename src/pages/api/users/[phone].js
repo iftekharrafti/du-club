@@ -9,7 +9,6 @@ export default async function handler(req, res) {
   await dbConnect();
 
   let phone = req.query.phone;
-  let user_id;
 
   if (method === "GET") {
     try {
@@ -33,17 +32,19 @@ export default async function handler(req, res) {
         res
           .status(200)
           .json({ status: "success", message: "PIN Send Your Phone Number" });
-      } else {
+      } else if (response.data.status === "error") {
         res
           .status(200)
           .json({ status: "error", message: "Not Registered Phone Number" });
+      } else {
+        res
+          .status(200)
+          .json({ status: "error", message: "Something went wrong" });
       }
     } catch (err) {
       res
         .status(200)
-        .json({ status: "error", message: "Something Went Wrong", err: err });
+        .json({ status: "error", message: "Something Went Wrong" });
     }
   }
-
-  
 }
