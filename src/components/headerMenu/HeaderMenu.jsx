@@ -91,7 +91,7 @@ const HeaderMenu = () => {
                       activeItem === "/selectHall" ? Style.active : ""
                     } ${Style.link}`}
                   >
-                    Application
+                    Admin Login
                   </Link>
                 </Nav>
               </>
