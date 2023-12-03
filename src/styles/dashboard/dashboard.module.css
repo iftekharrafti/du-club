@@ -1,7 +1,6 @@
 .mainContainer {
   background: #eee;
   position: relative;
-  margin-top: 45px;
 }
 .content {
   min-height: 100vh;
@@ -24,8 +23,13 @@
   }
 }
 
+.img {
+  width: 95px;
+  height: 80px;
+}
+
 .title {
-  font-size: 24px;
+  font-size: 16px;
   font-weight: 700;
 }
 
@@ -43,17 +47,17 @@
 .wrapper span {
   width: 100%;
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   user-select: none;
 }
 .wrapper span.plus,
 .wrapper span.minus {
-  background: #EEEEEE;
+  background: #eeeeee;
 }
 .wrapper span.num {
-  font-size: 20px;
+  font-size: 16px;
   /* border-right: 2px solid rgba(0, 0, 0, 0.2);
   border-left: 2px solid rgba(0, 0, 0, 0.2); */
   pointer-events: none;

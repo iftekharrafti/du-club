@@ -1,8 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "https://laravel.amaderthikana.com/api/ducaa";
-
-export const BASE_URL_ROOT = "https://laravel.amaderthikana.com/api";
+export const BASE_URL = "http://localhost:3000/api/";
 
 export const fetchDataFromApi = async (url, params) => {
   try {

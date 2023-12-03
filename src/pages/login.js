@@ -1,20 +1,16 @@
 /* eslint-disable react/jsx-no-duplicate-props */
 import Head from "next/head";
-import Image from "next/image";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import Style from "./Login.module.css";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import Style from "@/styles/login.module.css";
 import { useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "@/utils/api";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import TopTitle from "../topTitle/TopTitle";
 
 export default function Login() {
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [loadingBtn, setLoadingBtn] = useState(false);
   const [scheneChange, setScheneChange] = useState(true);
   const router = useRouter();
@@ -28,12 +24,13 @@ export default function Login() {
 
   const handleLoginSubmit = async (data) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/users/${data.phone}`
-      );
+      setLoadingBtn(true);
+      const response = await fetch(`${BASE_URL}/users/${data.phone}`);
       const result = await response.json();
       console.log(result);
       if (result.status === "success") {
+        toast.success("We've sent a 4-digit one time PIN in your phone");
+        setLoadingBtn(false);
         setScheneChange(!scheneChange);
         reset();
       }
@@ -108,9 +105,10 @@ export default function Login() {
                   <div className={Style.loginContainer}>
                     {/* Form header and login Form data */}
                     {/* Title */}
-                    <TopTitle title="We've sent a 4-digit one time PIN in your phone" />
+                    {/* <TopTitle title="We've sent a 4-digit one time PIN in your phone" /> */}
                     <Form>
                       <Form.Group className="mb-3" controlId="formEmail">
+                        <Form.Label>4-digit PIN</Form.Label>
                         <Form.Control
                           type="text"
                           className={`${Style.inputField} remove-focus`}
@@ -123,24 +121,18 @@ export default function Login() {
                       </Form.Group>
 
                       {/* Submit Button */}
-                      {loadingBtn ? (
-                        <Button
-                          variant="primary"
-                          type="submit"
-                          style={{ width: "100%" }}
-                          disabled
-                        >
-                          Loading...
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="primary"
-                          type="submit"
-                          style={{ width: "100%" }}
-                        >
-                          Sign In
-                        </Button>
-                      )}
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        style={{ width: "100%" }}
+                        disabled={loadingBtn}
+                      >
+                        {loadingBtn
+                          ? "Loading..."
+                          : scheneChange
+                          ? "Sign In"
+                          : "Submit"}
+                      </Button>
                     </Form>
                   </div>
                 </Col>

@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { BiSolidEditLocation } from "react-icons/bi";
 import { FaBars } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { AiFillDashboard } from "react-icons/ai";
-import { FiLogOut } from "react-icons/fi";
-import { RiLockPasswordFill } from "react-icons/ri";
 import { FaMoneyCheck } from "react-icons/fa";
 import { MdCategory } from "react-icons/md";
 import Style from "./dashboardLeftSide.module.css";
@@ -31,7 +28,7 @@ const DashboardLeftSide = () => {
 
   return (
     <>
-    {/* Dashboard Header */}
+      {/* Dashboard Header */}
       <DashboardHeader open={open} setOpen={setOpen} />
 
       {/* Dashboard Left Side bar */}
@@ -42,14 +39,6 @@ const DashboardLeftSide = () => {
         <div
           className={`${Style.headerBox}  px-3 pt-3 pb-4 d-flex justify-content-between`}
         >
-          <h1 className="fs-4">
-            <span className="bg-white text-dark rounded shadow px-2 me-2">
-              DC
-            </span>
-            <Link href="/dashboard" className="text-decoration-none">
-              <span className="text-white">DUCAA</span>
-            </Link>
-          </h1>
           <button
             className="btn d-md-none d-block close-btn px-1 py-0 text-white"
             onClick={() => setOpen(false)}
@@ -75,7 +64,7 @@ const DashboardLeftSide = () => {
                 activeItem === "/dashboard/payment" ? Style.active : ""
               } text-decoration-none px-3 py-2 d-block d-flex align-items-center`}
             >
-              <MdCategory className="me-1" /> Payment
+              <MdCategory className="me-1" /> Previous Doing
             </Link>
           </li>
           <li className="">
@@ -85,7 +74,7 @@ const DashboardLeftSide = () => {
                 activeItem === "/dashboard/feedback" ? Style.active : ""
               } text-decoration-none px-3 py-2 d-block d-flex align-items-center`}
             >
-              <FaMoneyCheck className="me-1" /> Feedback
+              <FaMoneyCheck className="me-1" /> Today&apos;s Doing
             </Link>
           </li>
 
@@ -96,7 +85,7 @@ const DashboardLeftSide = () => {
                 activeItem === "/dashboard/resign" ? Style.active : ""
               } text-decoration-none px-3 py-2 d-block d-flex align-items-center`}
             >
-              <CgProfile className="me-1" /> Resign Member
+              <CgProfile className="me-1" /> Pending Orders
             </Link>
           </li>
         </ul>

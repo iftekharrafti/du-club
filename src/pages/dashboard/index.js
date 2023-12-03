@@ -9,36 +9,25 @@ import LoadingSpinner from "@/components/loadingSpinner/LoadingSpinner";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function Dashboard() {
+async function getData() {
+  let res = await fetch(
+    "https://dhakauniversityclub.com/api/getProductByDay?dayName=sat"
+  );
+  let json = await res.json();
+  return json;
+}
+
+export default function Dashboard({ data }) {
   const [info, setInfo] = useState([]);
   const [counter, setCounter] = useState(0);
 
+  // const data = await getData();
+  // console.log(data);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://dhakauniversityclub.com/api/getProductByDay?dayName=sat",
-          {
-            headers: {
-              "Content-Type": "text/html",
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log(data);
-        setInfo(data);
-      } catch (error) {
-        console.error("Error fetching data:", error.message);
-      }
-    };
-
-    fetchData();
-  }, []);
+    if (data) {
+      console.log(data);
+    }
+  }, [data]);
 
   // Increment value
   const increment = () => {
@@ -66,35 +55,54 @@ export default function Dashboard() {
 
             {/* Main Content */}
             <div className={`${Style.content} px-4`}>
-              <Row className="mb-4 mt-4">
-                <Col lg={3} md={6} sm={12}>
-                  <Card>
-                    <Card.Img variant="top" src="/tea.jpg" />
-                    <Card.Body>
-                      <Card.Title className={Style.title}>Tea</Card.Title>
-                      <Card.Subtitle
-                        className="mb-3"
-                        style={{ fontSize: "18px", color: '#0B5ED7' }}
-                      >
-                        ৳ 10
-                      </Card.Subtitle>
-                      <div className={Style.wrapper}>
-                        <span className={Style.minus} onClick={decrement}>
-                          -
-                        </span>
-                        <span className={Style.num}>{counter}</span>
-                        <span className={Style.plus} onClick={increment}>
-                          +
-                        </span>
-                      </div>
-                      <div className="d-flex justify-content-center">
-                        <Button>Add to cart</Button>
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col lg={3} md={6} sm={12}>
-                  <p>Lorem, ipsum dolor.</p>
+              <Row className="pb-4 pt-4">
+                <Col lg={10} md={8}>
+                  <Row>
+                    {data?.data?.map((item) => (
+                      <Col lg={4} md={6} sm={12} key={item.id}>
+                        <Card className="d-flex flex-row px-2 mb-4">
+                          <div className="d-flex align-items-center">
+                            <Card.Img
+                              className={Style.img}
+                              variant="top"
+                              src={`https://dhakauniversityclub.com/${item?.productImgUrl}`}
+                            />
+                          </div>
+                          <div>
+                            <Card.Body>
+                              <Card.Title className={Style.title}>
+                                {item?.productName}
+                              </Card.Title>
+                              <Card.Subtitle
+                                className="mb-3"
+                                style={{ fontSize: "15px", color: "#0B5ED7" }}
+                              >
+                                ৳ 10
+                              </Card.Subtitle>
+                              <div className={Style.wrapper}>
+                                <span
+                                  className={Style.minus}
+                                  onClick={decrement}
+                                >
+                                  -
+                                </span>
+                                <span className={Style.num}>{counter}</span>
+                                <span
+                                  className={Style.plus}
+                                  onClick={increment}
+                                >
+                                  +
+                                </span>
+                              </div>
+                              <div className="d-flex justify-content-center">
+                                <Button size="sm">Add to cart</Button>
+                              </div>
+                            </Card.Body>
+                          </div>
+                        </Card>
+                      </Col>
+                    ))}
+                  </Row>
                 </Col>
               </Row>
             </div>
@@ -104,3 +112,27 @@ export default function Dashboard() {
     </>
   );
 }
+
+export const getStaticProps = async () => {
+  try {
+    const response = await axios.get(
+      "https://dhakauniversityclub.com/api/getProductByDay?dayName=mon"
+    );
+
+    const data = response.data;
+
+    return {
+      props: {
+        data: data,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+
+    return {
+      props: {
+        data: null,
+      },
+    };
+  }
+};
