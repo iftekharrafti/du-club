@@ -62,9 +62,10 @@ export default function Login() {
                   <div className={Style.loginContainer}>
                     {/* Form header and login Form data */}
                     {/* Title */}
-                    <TopTitle title="Phone" />
+                    {/* <TopTitle title="Phone" /> */}
                     <Form onSubmit={handleSubmit(handleLoginSubmit)}>
                       <Form.Group className="mb-3" controlId="formEmail">
+                        <Form.Label>Phone Number</Form.Label>
                         <Form.Control
                           type="text"
                           className={`${Style.inputField} remove-focus`}
