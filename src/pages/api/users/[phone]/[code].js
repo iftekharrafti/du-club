@@ -11,7 +11,6 @@ export default async function handler(req, res) {
   if (method === "GET") {
     try {
       const { phone, code } = req.query;
-      console.log(typeof code)
       if (code === "0") {
         return res.status(200).json({
           status: "error",
@@ -19,9 +18,8 @@ export default async function handler(req, res) {
           err: "Invalid OTP",
         });
       } else {
-        const count = await UserModel.find({ phone: phone }).count(
-          "total"
-        );
+        
+        let count=await UserModel.find({phone: phone, otp: code}).count('total');
         console.log(count)
         if (count === 1) {
           const user_id = await UserModel.findOne({ phone: phone }).select(
@@ -33,7 +31,7 @@ export default async function handler(req, res) {
             {
               $set: {
                 otp: 0,
-              },
+              },                   
             },
             {
               upsert: true,

@@ -12,7 +12,6 @@ import { BASE_URL } from "@/utils/api";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import TopTitle from "../topTitle/TopTitle";
-// import useAuth from "@/hooks/useAuth";
 
 export default function Login() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -27,27 +26,21 @@ export default function Login() {
     formState: { errors },
   } = useForm();
 
-  // Password hide and show
-  const showHidePassword = () => {
-    setIsPasswordVisible(!isPasswordVisible);
-  };
-
   const handleLoginSubmit = async (data) => {
-
-    try{
-      const response = await fetch(`https://dhakauniversityclub.com/api/getMember?mobile=${data.phone}`);
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/users/${data.phone}`
+      );
       const result = await response.json();
-      if(result.status === 'success'){
-
+      console.log(result);
+      if (result.status === "success") {
         setScheneChange(!scheneChange);
         reset();
       }
-
-      console.log(result);
-    }catch(err){
-      console.log(err); 
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
   return (
     <>
@@ -64,96 +57,93 @@ export default function Login() {
               className="d-flex justify-content-center mb-5 mt-4"
               style={{ width: "100%" }}
             >
-              {
-                scheneChange ? <Col lg={4} md={7} sm={7}>
-                <div className={Style.loginContainer}
-                  
-                >
-                  {/* Form header and login Form data */}
-                  {/* Title */}
-                  <TopTitle title="Login" />
-                  <Form onSubmit={handleSubmit(handleLoginSubmit)}>
-                    <Form.Group className="mb-3" controlId="formEmail">
-                      <Form.Control
-                        type="text"
-                        className={`${Style.inputField} remove-focus`}
-                        {...register("phone", { required: true })}
-                        placeholder="Phone Number"
-                      />
-                      {errors.phone && (
-                        <span className="text-danger">Phone is required</span>
-                      )}
-                    </Form.Group>
+              {scheneChange ? (
+                <Col lg={4} md={7} sm={7}>
+                  <div className={Style.loginContainer}>
+                    {/* Form header and login Form data */}
+                    {/* Title */}
+                    <TopTitle title="Phone" />
+                    <Form onSubmit={handleSubmit(handleLoginSubmit)}>
+                      <Form.Group className="mb-3" controlId="formEmail">
+                        <Form.Control
+                          type="text"
+                          className={`${Style.inputField} remove-focus`}
+                          {...register("phone", { required: true })}
+                          placeholder="Phone Number"
+                        />
+                        {errors.phone && (
+                          <span className="text-danger">Phone is required</span>
+                        )}
+                      </Form.Group>
 
-                    {/* Submit Button */}
-                    {loadingBtn ? (
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        style={{ width: "100%" }}
-                        disabled
-                      >
-                        Loading...
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        style={{ width: "100%" }}
-                      >
-                        Sign In
-                      </Button>
-                    )}
-                  </Form>
-                  <p className="text-center mt-3">
-                    Don&apos;t have an account?{" "}
-                    <Link href="/application">Application Now</Link>
-                  </p>
-                </div>
-              </Col> : <Col lg={4} md={7} sm={7}>
-                <div className={Style.loginContainer}
-                  
-                >
-                  {/* Form header and login Form data */}
-                  {/* Title */}
-                  <TopTitle title="Code" />
-                  <Form >
-                    <Form.Group className="mb-3" controlId="formEmail">
-                      <Form.Control
-                        type="text"
-                        className={`${Style.inputField} remove-focus`}
-                        {...register("code", { required: true })}
-                        placeholder="Code"
-                      />
-                      {errors.code && (
-                        <span className="text-danger">Code is required</span>
+                      {/* Submit Button */}
+                      {loadingBtn ? (
+                        <Button
+                          variant="primary"
+                          type="submit"
+                          style={{ width: "100%" }}
+                          disabled
+                        >
+                          Loading...
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="primary"
+                          type="submit"
+                          style={{ width: "100%" }}
+                        >
+                          Sign In
+                        </Button>
                       )}
-                    </Form.Group>
+                    </Form>
+                    <p className="text-center mt-3">
+                      Don&apos;t have an account?{" "}
+                      <Link href="/application">Application Now</Link>
+                    </p>
+                  </div>
+                </Col>
+              ) : (
+                <Col lg={4} md={7} sm={7}>
+                  <div className={Style.loginContainer}>
+                    {/* Form header and login Form data */}
+                    {/* Title */}
+                    <TopTitle title="We've sent a 4-digit one time PIN in your phone" />
+                    <Form>
+                      <Form.Group className="mb-3" controlId="formEmail">
+                        <Form.Control
+                          type="text"
+                          className={`${Style.inputField} remove-focus`}
+                          {...register("code", { required: true })}
+                          placeholder="Enter 4-digit PIN"
+                        />
+                        {errors.code && (
+                          <span className="text-danger">Code is required</span>
+                        )}
+                      </Form.Group>
 
-                    {/* Submit Button */}
-                    {loadingBtn ? (
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        style={{ width: "100%" }}
-                        disabled
-                      >
-                        Loading...
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        style={{ width: "100%" }}
-                      >
-                        Sign In
-                      </Button>
-                    )}
-                  </Form>
-                </div>
-              </Col>
-              }
-              
+                      {/* Submit Button */}
+                      {loadingBtn ? (
+                        <Button
+                          variant="primary"
+                          type="submit"
+                          style={{ width: "100%" }}
+                          disabled
+                        >
+                          Loading...
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="primary"
+                          type="submit"
+                          style={{ width: "100%" }}
+                        >
+                          Sign In
+                        </Button>
+                      )}
+                    </Form>
+                  </div>
+                </Col>
+              )}
             </div>
           </Row>
         </Container>
