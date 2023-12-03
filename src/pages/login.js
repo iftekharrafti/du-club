@@ -94,10 +94,6 @@ export default function Login() {
                         </Button>
                       )}
                     </Form>
-                    <p className="text-center mt-3">
-                      Don&apos;t have an account?{" "}
-                      <Link href="/application">Application Now</Link>
-                    </p>
                   </div>
                 </Col>
               ) : (

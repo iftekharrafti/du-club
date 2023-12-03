@@ -2,7 +2,7 @@
 import Head from "next/head";
 import useFetch from "@/hooks/useFetch";
 import { Button, Col, Container, Form, Row, Table } from "react-bootstrap";
-import Style from "@/styles/dashboard/payment.module.css";
+import Style from "@/styles/dashboard/previousDoing.module.css";
 import { useRouter } from "next/router";
 import DashboardLeftSide from "@/components/dashboard/dashboardLeftSide/DashboardLeftSide";
 import LoadingSpinner from "@/components/loadingSpinner/LoadingSpinner";
@@ -10,7 +10,7 @@ import TopTitle from "@/components/topTitle/TopTitle";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function Payment() {
+export default function PreviousDoing() {
   const [loadingBtn, setLoadingBtn] = useState(false);
   const router = useRouter();
 
@@ -23,7 +23,7 @@ export default function Payment() {
   return (
     <>
       <Head>
-        <title>DASHBOARD::Payment</title>
+        <title>DASHBOARD::Today&apos;s Doing</title>
         <meta name="description" content="Dashboard" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="./favicon.jpeg" />
@@ -36,53 +36,58 @@ export default function Payment() {
 
             {/* Main Content */}
             <div className={`${Style.content} px-4`}>
-              
               <Row>
                 <div className="d-flex mb-5 mt-0" style={{ width: "100%" }}>
-                  <Col lg={5} md={7} sm={7}>
+                  <Col lg={8} md={10} sm={12}>
                     <div
                       style={{
                         background: "#fff",
                         padding: "25px 50px",
                         borderRadius: "20px",
-                        marginTop: '40px'
+                        marginTop: "40px",
                       }}
                     >
-                      <TopTitle title="Feedback Message" textAlign="left" />
+                      <TopTitle title="Previous Doing" textAlign="left" />
                       {/* Form header and login Form data */}
                       {/* Title */}
                       <Form>
-                        <Form.Group className="mb-3" controlId="formEmail">
-                          <Form.Label className={Style.inputLabel}>
-                            Subject
-                          </Form.Label>
-                          <div className={Style.textField}>
-                            <Form.Control
-                              type="text"
-                              className={`${Style.inputField} remove-focus`}
-                              {...register("subject", { required: true })}
-                              placeholder="Enter your subject"
-                            />
+                        <div className={Style.date}>
+                          <div className={Style.from}>
+                            <Form.Group className="mb-3" controlId="formEmail">
+                              <Form.Label className={Style.inputLabel}>
+                                From Date
+                              </Form.Label>
+                              <div className={Style.textField}>
+                                <Form.Control
+                                  type="date"
+                                  className={`${Style.inputField} remove-focus`}
+                                  {...register("subject", { required: true })}
+                                />
+                              </div>
+                            </Form.Group>
                           </div>
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formPassword">
-                          <div className={Style.textField}>
-                          <Form.Label className={Style.inputLabel}>
-                            Message
-                          </Form.Label>
-                            <Form.Control
-                              as="textarea"
-                              className={`${Style.inputField} remove-focus`}
-                              placeholder="Leave a comment here"
-                              style={{ height: "100px" }}
-                            />
+                          <div className={Style.to}>
+                            <Form.Group className="mb-3" controlId="formEmail">
+                              <Form.Label className={Style.inputLabel}>
+                                To Date
+                              </Form.Label>
+                              <div className={Style.textField}>
+                                <Form.Control
+                                  type="date"
+                                  className={`${Style.inputField} remove-focus`}
+                                  {...register("subject", { required: true })}
+                                />
+                              </div>
+                            </Form.Group>
                           </div>
-                        </Form.Group>
 
-                        {/* Submit Button */}
-                        <Button variant="primary" type="submit">
-                          Submit
-                        </Button>
+                          {/* Submit Button */}
+                          <div className={Style.submit}>
+                            <Button variant="primary" type="submit">
+                              Submit
+                            </Button>
+                          </div>
+                        </div>
                         {/* {loadingBtn ? (
                           <div className="d-flex justify-content-center">
                             <Button variant="primary" type="submit" disabled>

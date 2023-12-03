@@ -59,9 +59,9 @@ const DashboardLeftSide = () => {
           </li>
           <li className="">
             <Link
-              href="/dashboard/payment"
+              href="/dashboard/previousDoing"
               className={`${Style.link} ${
-                activeItem === "/dashboard/payment" ? Style.active : ""
+                activeItem === "/dashboard/previousDoing" ? Style.active : ""
               } text-decoration-none px-3 py-2 d-block d-flex align-items-center`}
             >
               <MdCategory className="me-1" /> Previous Doing
@@ -69,9 +69,9 @@ const DashboardLeftSide = () => {
           </li>
           <li className="">
             <Link
-              href="/dashboard/feedback"
+              href="/dashboard/todayDoing"
               className={`${Style.link} ${
-                activeItem === "/dashboard/feedback" ? Style.active : ""
+                activeItem === "/dashboard/todayDoing" ? Style.active : ""
               } text-decoration-none px-3 py-2 d-block d-flex align-items-center`}
             >
               <FaMoneyCheck className="me-1" /> Today&apos;s Doing
