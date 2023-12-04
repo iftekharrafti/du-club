@@ -13,13 +13,13 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`mt-5`}>
+      <main className={`${Style.home} pt-5`}>
         <Container>
           <Row>
             <Col md={5} sm={12} className="mx-auto">
               <div className="d-flex">
                 <Image src="/du_logo.png" width={150} height={150} alt="du logo" />
-                <div className="d-flex flex-column justify-content-center">
+                <div className="d-flex flex-column justify-content-center ms-2">
                   <h3>Dhaka University Club</h3>
                   <h3>ঢাকা বিশ্ববিদ্যালয় ক্লাব</h3>
                 </div>

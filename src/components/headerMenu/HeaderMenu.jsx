@@ -84,15 +84,7 @@ const HeaderMenu = () => {
                   </Link>
                 </Nav>
                 <Nav>
-                  <Link
-                    href="/selectHall"
-                    onClick={() => setExpanded(false)}
-                    className={`${
-                      activeItem === "/selectHall" ? Style.active : ""
-                    } ${Style.link}`}
-                  >
-                    Admin Login
-                  </Link>
+                  <a href="https://dhakauniversityclub.com/">Admin Login</a>
                 </Nav>
               </>
             )}

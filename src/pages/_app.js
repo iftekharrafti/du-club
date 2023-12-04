@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import DashboardLeftSide from '@/components/dashboard/dashboardLeftSide/DashboardLeftSide';
 import LoadingSpinner from '@/components/loadingSpinner/LoadingSpinner';
 import { useState } from 'react';
+import Footer from '@/components/footer/Footer';
 
 export default function App({ Component, pageProps }) {
   const [loading, setLoading] = useState(false);
@@ -48,7 +49,7 @@ export default function App({ Component, pageProps }) {
         )
       }
       {/* Footer */}
-      {/* {shouldShowHeaderFooter && <Footer />} */}
+      {shouldShowHeaderFooter && <Footer />}
       <ToastContainer />
     </>
   )
