@@ -32,7 +32,7 @@ const HeaderMenu = () => {
           <Link href="/">
             <img
               className={Style.logo}
-              src="/hostel.png"
+              src="/duclub.png"
               alt=""
               onClick={() => setExpanded(false)}
             />
