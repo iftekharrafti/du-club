@@ -8,6 +8,8 @@ import { MdCategory } from "react-icons/md";
 import Style from "./dashboardLeftSide.module.css";
 import DashboardHeader from "../dashboardHeader/DashboardHeader";
 import { useRouter } from "next/router";
+import { FiLogOut } from "react-icons/fi";
+import Cookies from "js-cookie";
 
 const DashboardLeftSide = () => {
   const router = useRouter();
@@ -20,9 +22,10 @@ const DashboardLeftSide = () => {
     setActiveItem(pathname);
   }, [router]);
 
+  // Logout button
   const handleLogout = () => {
-    // Cookies.remove("TOKEN_LOGIN");
-    localStorage.removeItem("user-info");
+    Cookies.remove("TOKEN_LOGIN");
+    // localStorage.removeItem("user-info");
     router.push("/");
   };
 
@@ -87,6 +90,9 @@ const DashboardLeftSide = () => {
             >
               <CgProfile className="me-1" /> Pending Orders
             </Link>
+          </li>
+          <li className={`${Style.link} px-3 py-2`} onClick={handleLogout} style={{cursor: "pointer"}}>
+            <FiLogOut className="me-1" /> Log out
           </li>
         </ul>
       </div>
