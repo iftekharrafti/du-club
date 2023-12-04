@@ -6,7 +6,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Style from "./headerMenu.module.css";
 import { useRouter } from "next/router";
-// import Cookies from "js-cookie";
+import Cookies from "js-cookie";
 
 const HeaderMenu = () => {
   const router = useRouter();
@@ -14,10 +14,10 @@ const HeaderMenu = () => {
   const [expanded, setExpanded] = useState(false);
   const [cookies, setCookies] = useState(null);
 
-  //   useEffect(() => {
-  //     const storedCookies = Cookies.get("TOKEN_LOGIN");
-  //     setCookies(storedCookies);
-  //   }, []);
+    useEffect(() => {
+      const storedCookies = Cookies.get("loginCookie");
+      setCookies(storedCookies);
+    }, []);
 
   // Collect path name and show the active button
   useEffect(() => {
