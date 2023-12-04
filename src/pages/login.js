@@ -9,6 +9,7 @@ import axios from "axios";
 import { BASE_URL } from "@/utils/api";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 export default function Login() {
   const [loadingBtn, setLoadingBtn] = useState(false);
@@ -54,6 +55,7 @@ export default function Login() {
       const response = await fetch(`${BASE_URL}/users/${phone}/${data.code}`);
       const result = await response.json();
       if(result.status === "success"){
+        Cookies.set("TOKEN_LOGIN", result.tokenLogin, { expires: 2 });
         setLoadingBtn(false);
         toast.success(result.message)
         router.push("/dashboard");

@@ -1,6 +1,7 @@
 .mainContainer {
   background: #eee;
   position: relative;
+  padding-top: 45px;
 }
 .content {
   min-height: 100vh;

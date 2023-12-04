@@ -37,10 +37,10 @@ export default async function handler(req, res) {
             phone: response.data.data.mobile,
             member_code: response.data.data.member_code,
           };
-          // const user_id = await UserModel.findOne({ phone: phone }).select(
-          //   "_id"
-          // );
-          // let token = EncodeToken(phone, user_id._id);
+          const user_id = await UserModel.findOne({ phone: phone }).select(
+            "_id"
+          );
+          let token = EncodeToken(phone, user_id._id);
           await UserModel.updateOne(
             { phone: phone },
             {
@@ -54,16 +54,17 @@ export default async function handler(req, res) {
           );
 
           // Set cookie manually using setHeader
-          res.setHeader(
-            "Set-Cookie",
-            `loginCookie=${encodeURIComponent(
-              JSON.stringify(userObj)
-            )}; HttpOnly; Secure; SameSite=Strict; Expires=${expirationDate.toUTCString()}`
-          );
+          // res.setHeader(
+          //   "Set-Cookie",
+          //   `loginCookie=${encodeURIComponent(
+          //     JSON.stringify(userObj)
+          //   )}; HttpOnly; Secure; SameSite=Strict; Expires=${expirationDate.toUTCString()}`
+          // );
 
           return res.status(200).json({
             status: "success",
             message: "Verify Successful",
+            tokenLogin: token
           });
         } else if (count === 0) {
           return res.status(200).json({
