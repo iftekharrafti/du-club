@@ -36,12 +36,11 @@ export default function Login() {
         setLoadingBtn(false);
         setScheneChange(!scheneChange);
         reset();
-      }else if(result.status === "error"){
-        toast.error(result.message)
+      } else if (result.status === "error") {
+        toast.error(result.message);
         setLoadingBtn(false);
-      }
-      else{
-        toast.error(result.message)
+      } else {
+        toast.error(result.message);
         setLoadingBtn(false);
       }
     } catch (err) {
@@ -54,22 +53,24 @@ export default function Login() {
       setLoadingBtn(true);
       const response = await fetch(`${BASE_URL}/users/${phone}/${data.code}`);
       const result = await response.json();
-      if(result.status === "success"){
+      if (result.status === "success") {
         Cookies.set("TOKEN_LOGIN", result.tokenLogin, { expires: 2 });
+        Cookies.set("USER_ID", result.id, { expires: 2 });
+        Cookies.set("USER_NAME", result.name, { expires: 2 });
         setLoadingBtn(false);
-        toast.success(result.message)
+        toast.success(result.message);
         router.push("/dashboard");
         reset();
-      } else if(result.status === "error"){
+      } else if (result.status === "error") {
         setLoadingBtn(false);
-        toast.error(result.message)
-      }
-      else{
+        toast.error(result.message);
+      } else {
         setLoadingBtn(false);
-        toast.error(result.message)
+        toast.error(result.message);
       }
     } catch (err) {
       console.log(err);
+      setLoadingBtn(false);
     }
   };
 

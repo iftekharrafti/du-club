@@ -10,6 +10,7 @@ import { CgProfile } from "react-icons/cg";
 import { FiLogOut } from "react-icons/fi";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 const DashboardHeader = ({ open, setOpen }) => {
   const [itemValue, setItemValue] = useState(null);
@@ -22,10 +23,10 @@ const DashboardHeader = ({ open, setOpen }) => {
   // Logout button
   const handleLogout = () => {
     Cookies.remove("TOKEN_LOGIN");
-    localStorage.removeItem("user-info");
+    Cookies.remove("USER_ID");
+    Cookies.remove("USER_NAME");
     router.push("/");
   };
-
 
   return (
     <div className={`${Style.dashboardHeader} pt-2`}>
@@ -45,34 +46,48 @@ const DashboardHeader = ({ open, setOpen }) => {
         </div>
         <div>
           <Dropdown>
-            <Dropdown.Toggle id="dropdown-basic" className={Style.dropdown} style={{margin: 0, padding: 0, background: 'transparent',  border: 'none'}}>
-              {
-                itemValue?.profile_image !== null ? (
-                  <img
-                src={baseImgUrl + itemValue?.profile_image}
-                className={Style.dropdownImg}
-                alt=""
-              />
-                ) : (
-                  <img
-                src="./default.png"
-                className={Style.dropdownImg}
-                alt=""
-              />
-                )
-              }
-              
+            <Dropdown.Toggle
+              id="dropdown-basic"
+              className={Style.dropdown}
+              style={{
+                margin: 0,
+                padding: 0,
+                background: "transparent",
+                border: "none",
+              }}
+            >
+              {itemValue?.profile_image !== null ? (
+                <img
+                  src={baseImgUrl + itemValue?.profile_image}
+                  className={Style.dropdownImg}
+                  alt=""
+                />
+              ) : (
+                <img src="./default.png" className={Style.dropdownImg} alt="" />
+              )}
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
               <Dropdown.Item>
-                <Link href="/dashboard/updateInfo" className="text-decoration-none text-black d-flex align-items-center"><BiSolidEditLocation className="me-1" /> Update Profile</Link>
+                <Link
+                  href="/dashboard/updateInfo"
+                  className="text-decoration-none text-black d-flex align-items-center"
+                >
+                  <BiSolidEditLocation className="me-1" /> Update Profile
+                </Link>
               </Dropdown.Item>
               <Dropdown.Item>
-                <Link href="/dashboard/changePassword" className="text-decoration-none text-black d-flex align-items-center"><RiLockPasswordFill className="me-1" /> Change Password</Link>
+                <Link
+                  href="/dashboard/changePassword"
+                  className="text-decoration-none text-black d-flex align-items-center"
+                >
+                  <RiLockPasswordFill className="me-1" /> Change Password
+                </Link>
               </Dropdown.Item>
               <Dropdown.Item onClick={handleLogout}>
-              <span className="d-flex align-items-center"><FiLogOut className="me-1" /> Log out</span>
+                <span className="d-flex align-items-center">
+                  <FiLogOut className="me-1" /> Log out
+                </span>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>

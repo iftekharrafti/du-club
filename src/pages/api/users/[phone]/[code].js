@@ -64,7 +64,9 @@ export default async function handler(req, res) {
           return res.status(200).json({
             status: "success",
             message: "Verify Successful",
-            tokenLogin: token
+            id: response.data.data.id,
+            name: response.data.data.name,
+            tokenLogin: token,
           });
         } else if (count === 0) {
           return res.status(200).json({

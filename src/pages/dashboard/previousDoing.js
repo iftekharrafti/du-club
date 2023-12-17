@@ -9,8 +9,9 @@ import LoadingSpinner from "@/components/loadingSpinner/LoadingSpinner";
 import TopTitle from "@/components/topTitle/TopTitle";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
-export default function PreviousDoing() {
+export default function PreviousDoing({ previous }) {
   const [loadingBtn, setLoadingBtn] = useState(false);
   const router = useRouter();
 
@@ -20,10 +21,19 @@ export default function PreviousDoing() {
     formState: { errors },
   } = useForm();
 
+  const handlePreviousSubmit = async (data) => {
+    const { fromDate, toDate } = data;
+
+    // Navigate to another page with the fromDate and toDate as query parameters
+    router.push(
+      `/dashboard/previousDetails?fromDate=${fromDate}&toDate=${toDate}`
+    );
+  };
+
   return (
     <>
       <Head>
-        <title>DASHBOARD::Today&apos;s Doing</title>
+        <title>DASHBOARD::Previous Doing</title>
         <meta name="description" content="Dashboard" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="./favicon.jpeg" />
@@ -36,21 +46,20 @@ export default function PreviousDoing() {
 
             {/* Main Content */}
             <div className={`${Style.content} px-4`}>
-              <Row>
-                <div className="d-flex mb-5 mt-0" style={{ width: "100%" }}>
+              <Row style={{ marginTop: "60px" }}>
+                <div className="d-flex mb-2 mt-0" style={{ width: "100%" }}>
                   <Col lg={8} md={10} sm={12}>
+                    <TopTitle title="Previous Doing" textAlign="left" />
                     <div
                       style={{
                         background: "#fff",
                         padding: "25px 50px",
                         borderRadius: "20px",
-                        marginTop: "40px",
                       }}
                     >
-                      <TopTitle title="Previous Doing" textAlign="left" />
                       {/* Form header and login Form data */}
                       {/* Title */}
-                      <Form>
+                      <Form onSubmit={handleSubmit(handlePreviousSubmit)}>
                         <div className={Style.date}>
                           <div className={Style.from}>
                             <Form.Group className="mb-3" controlId="formEmail">
@@ -61,7 +70,7 @@ export default function PreviousDoing() {
                                 <Form.Control
                                   type="date"
                                   className={`${Style.inputField} remove-focus`}
-                                  {...register("subject", { required: true })}
+                                  {...register("fromDate", { required: true })}
                                 />
                               </div>
                             </Form.Group>
@@ -75,7 +84,7 @@ export default function PreviousDoing() {
                                 <Form.Control
                                   type="date"
                                   className={`${Style.inputField} remove-focus`}
-                                  {...register("subject", { required: true })}
+                                  {...register("toDate", { required: true })}
                                 />
                               </div>
                             </Form.Group>
@@ -88,19 +97,6 @@ export default function PreviousDoing() {
                             </Button>
                           </div>
                         </div>
-                        {/* {loadingBtn ? (
-                          <div className="d-flex justify-content-center">
-                            <Button variant="primary" type="submit" disabled>
-                              Loading...
-                            </Button>
-                          </div>
-                        ) : (
-                          <div className="d-flex justify-content-center">
-                            <Button variant="primary" type="submit">
-                              Change Password
-                            </Button>
-                          </div>
-                        )} */}
                       </Form>
                     </div>
                   </Col>
