@@ -8,8 +8,8 @@ import LoadingSpinner from "@/components/loadingSpinner/LoadingSpinner";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { subDays, format } from "date-fns";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
+import { BASE_URL } from "@/utils/api";
 
 function getCurrentDayName() {
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -18,12 +18,10 @@ function getCurrentDayName() {
   return daysOfWeek[dayIndex];
 }
 
-
 export default function Dashboard({ data }) {
   const [counters, setCounters] = useState({});
 
   const myId = Cookies.get("USER_ID");
-  const toDate = format(new Date(), "yyyy-MM-dd");
 
   const increment = (id) => {
     console.log(id);
@@ -53,52 +51,40 @@ export default function Dashboard({ data }) {
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, Placed!",
       });
-  
+
       if (result.isConfirmed) {
-        const formData = new FormData();
-        formData.append("customer", myId);
-        formData.append("warehouseID", "4");
-        formData.append("saleDate", toDate);
-        formData.append("invoiceDate", toDate);
-        formData.append("subTotal", "6.0");
-        formData.append("vat", "0");
-        formData.append("vatPertan", "0");
-        formData.append("discountType", "0");
-        formData.append("discountPercent", "");
-        formData.append("discount", "0");
-        formData.append("totalAmount", "6.00");
-        formData.append("r1", "3");
-        formData.append("extra_sms", "0");
-        formData.append("submitBtn", "");
-        formData.append("priority", '["1"]');
-        formData.append("qty", `[${quantity}]`);
-        formData.append("productID", `[${id}]`);
-        formData.append("price", `[${price}]`);
-  
-        const response = await axios.post(
-          "https://www.dhakauniversityclub.com/api/salesStore",
-          formData,
-          {
-            headers: {
-              "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
-            },
-            withCredentials: true, // Add this line
-          }
-        );
-  
-        console.log(response);
-  
-        Swal.fire({
-          title: "Order Placed!",
-          text: "Your order has been placed successfully.",
-          icon: "success",
-        });
+        const newData = {
+          quantity: quantity,
+          productID: id,
+          price: price,
+          customer: myId,
+        };
+
+        // const response = await axios.post(
+        //   "https://www.dhakauniversityclub.com/api/salesStore",
+        //   formData,
+        //   {
+        //     headers: {
+        //       "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+        //     },
+        //     withCredentials: true, // Add this line
+        //   }
+        // );
+
+        const response = await axios.post(`${BASE_URL}/service`, newData);
+
+        if (response.data.status === "success") {
+          Swal.fire({
+            title: "Order Placed!",
+            text: "Your order has been placed successfully.",
+            icon: "success",
+          });
+        }
       }
     } catch (err) {
       console.log(err);
     }
   };
-  
 
   return (
     <>
@@ -148,7 +134,7 @@ export default function Dashboard({ data }) {
                                   -
                                 </span>
                                 <span className={Style.num}>
-                                  {counters[item.productID] || 0}
+                                  {counters[item.productID] || 1}
                                 </span>
                                 <span
                                   className={Style.plus}
@@ -158,7 +144,16 @@ export default function Dashboard({ data }) {
                                 </span>
                               </div>
                               <div className="d-flex justify-content-center">
-                                <Button size="sm" onClick={() => handleCartClick(item.productID, item?.productPrice, counters[item.productID] )}>
+                                <Button
+                                  size="sm"
+                                  onClick={() =>
+                                    handleCartClick(
+                                      item.productID,
+                                      item?.productPrice,
+                                      counters[item.productID]
+                                    )
+                                  }
+                                >
                                   Add to cart
                                 </Button>
                               </div>
